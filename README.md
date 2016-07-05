@@ -1,1 +1,3 @@
 # dots
+
+Run script/bootstrap.
