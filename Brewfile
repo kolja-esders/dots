@@ -13,6 +13,9 @@ brew 'readline'
 brew 'postgresql'
 # brew 'ruby-build'
 brew 'unrar'
+brew 'tree'
+brew 'n'
+
 
 cask 'atom'
 cask 'google-chrome'
