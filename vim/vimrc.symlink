@@ -11,11 +11,30 @@ silent !stty -ixon > /dev/null 2>/dev/null
 let s:vimdir = expand("~") . "/.vim"
 let s:has_ag = executable('ag')
 
-" Load bundles
-execute pathogen#infect()
+" Plugins <3
+call plug#begin('~/.local/share/nvim/plugged')
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'altercation/vim-colors-solarized'
+
+Plug 'terryma/vim-expand-region'
+Plug 'Townk/vim-autoclose'
+
+Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+call plug#end() 
 
 " - General ###################################################################
-set nobackup " Makes sure to create no backup files (filename~)
+
+" Autocomplete
+call deoplete#enable()
+
+" Makes sure to create no backup files (filename~)
+set nobackup
 
 " Use Ag over Grep
 if s:has_ag
@@ -103,12 +122,19 @@ let g:tagbar_width = 60
 
 " - Misc ######################################################################
 
+" configure expanding of tabs for various file types
+au BufRead,BufNewFile *.py set expandtab
+au BufRead,BufNewFile *.c set noexpandtab
+au BufRead,BufNewFile *.h set noexpandtab
+au BufRead,BufNewFile Makefile* set noexpandtab
+
 " Window flashing and beeping
 set noerrorbells visualbell t_vb= " No beeping and window flashing
 autocmd GUIEnter * set visualbell t_vb= " Flashing needs to be disabled after GUI startup
 
 " Better search in files
 set number
+set rnu
 set ignorecase
 set smartcase
 set incsearch
@@ -128,18 +154,23 @@ set expandtab " Use spaces instead of tabs
 set smarttab " Be smart when using tabs
 
 " " 1 tab == 4 spaces
-set shiftwidth=2
-set softtabstop=2
+"set shiftwidth=2
+"set softtabstop=2
 "set tabstop=2
-set shiftround " use multiple of shiftwidth when indenting with '<' and '>'
+"set shiftround " use multiple of shiftwidth when indenting with '<' and '>'
 
 " " Linebreak on 500 characters
 set lbr
-set tw=500
 
-set autoindent " Auto indent
-set cindent
+"set cindent
 set wrap " Wrap lines
+
+set expandtab
+set textwidth=120
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
 
 " --- CtrlP
 " Setup some default ignores
