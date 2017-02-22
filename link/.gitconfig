@@ -1,0 +1,29 @@
+[user]
+    name = Kolja Esders
+    email = kolja.esders@gmail.com
+[core]
+    autocrlf = input
+    whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+    excludesfile = ~/.gitignore_global
+    editor = vim
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    ui = true
+[mergetool]
+    keepBackup = false
+[difftool]
+    prompt = false
+[include]
+    path = ~/.gitconfig.local
+[push]
+    default = simple
+[apply]
+    whitespace = fix
+[merge]
+    log = true
+[rerere]
+    enabled = 1
+[help]
+    autocorrect = 1
