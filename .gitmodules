@@ -1,0 +1,6 @@
+[submodule "git-extras"]
+	path = vendor/git-extras
+	url = git://github.com/tj/git-extras.git
+[submodule "z"]
+	path = vendor/z
+	url = git://github.com/rupa/z.git

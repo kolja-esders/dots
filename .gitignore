@@ -1,0 +1,10 @@
+/caches/
+/backups/
+
+/link/.ssh/id_*
+/link/.ssh/*.pem
+/link/.ssh/known_hosts*
+
+/link/.vim/plugged
+
+*LOCAL*
