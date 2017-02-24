@@ -9,10 +9,18 @@ set mouse=a " Enable mouse support for scrolling
 silent !stty -ixon > /dev/null 2>/dev/null 
 
 let s:vimdir = expand("~") . "/.vim"
+let s:nvimdir = expand("~") . "/.local/share/nvim"
 let s:has_ag = executable('ag')
 
 " Plugins <3
-call plug#begin('~/.local/share/nvim/plugged')
+
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
+
+call plug#begin(has('nvim') ? s:nvimdir . "/plugged" : s:vimdir)
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -25,6 +33,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+Plug 'benekastah/neomake', Cond(has('nvim'))
 
 call plug#end() 
 
