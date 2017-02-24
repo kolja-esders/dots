@@ -9,17 +9,18 @@ set mouse=a
 " Make sure <C-q> and <C-s> reach vim
 silent !stty -ixon > /dev/null 2>/dev/null 
 
-let s:vimdir = expand("~") . "/.vim"
-let s:nvimdir = expand("~") . "/.local/share/nvim"
+let s:vimdir = expand("~") . '/.vim'
+let s:nvimdir = expand("~") . '/.local/share/nvim'
 let s:has_ag = executable('ag')
+let s:plugdir = s:nvimdir . '/site/autoload/plug.vim'
 
 " - Plugins <3 ################################################################
 
 " Automatically install vim-plug in case it is missing
-if empty(glob(s:nvimdir . '/site/autoload/plug.vim'))
-  silent !curl -fLo s:vimdir . '/site/autoload/plug.vim' --create-dirs
+if empty(glob(s:plugdir))
+  silent !curl -fLo '~/.local/share/nvim/site/autoload/plug.vim' --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " Helper function to have prettier conditionals
@@ -186,9 +187,9 @@ set wrap " Wrap lines
 
 set expandtab
 set textwidth=120
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set autoindent
 
 " --- CtrlP
