@@ -1,8 +1,10 @@
 # Ubuntu-only stuff. Abort if not Ubuntu.
 is_ubuntu || return 1
 
-# Add PPA needed for neovim
-sudo add-apt-repository -y ppa:neovim-ppa/stable
+# If needed, add PPA needed for neovim
+if ! hash gdate 2>/dev/null; then
+    sudo add-apt-repository -y ppa:neovim-ppa/stable
+fi
 
 # Update APT.
 e_header "Updating APT"
