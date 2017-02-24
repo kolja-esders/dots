@@ -16,8 +16,8 @@ let s:has_ag = executable('ag')
 " - Plugins <3 ################################################################
 
 " Automatically install vim-plug in case it is missing
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob(s:nvimdir . '/site/autoload/plug.vim'))
+  silent !curl -fLo s:vimdir . '/site/autoload/plug.vim' --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
