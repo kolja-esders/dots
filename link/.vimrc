@@ -18,7 +18,7 @@ let s:plugdir = s:nvimdir . '/site/autoload/plug.vim'
 
 " Automatically install vim-plug in case it is missing
 if empty(glob(s:plugdir))
-  silent !curl -fLo '~/.local/share/nvim/site/autoload/plug.vim' --create-dirs
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
@@ -42,16 +42,11 @@ Plug 'Townk/vim-autoclose'
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
 Plug 'benekastah/neomake', Cond(has('nvim'))
 
 call plug#end() 
 
 " - General ###################################################################
-
-" Autocomplete
-call deoplete#enable()
 
 " Makes sure to create no backup files (filename~)
 set nobackup

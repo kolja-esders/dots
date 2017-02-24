@@ -3,7 +3,7 @@ is_ubuntu || return 1
 
 # If needed, add PPA needed for neovim
 if type "$nvim" > /dev/null; then
-    sudo add-apt-repository -y ppa:neovim-ppa/stable
+  sudo add-apt-repository -y ppa:neovim-ppa/stable
 fi
 
 # Update APT.
