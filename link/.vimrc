@@ -2,9 +2,10 @@ set nocompatible
 set encoding=utf-8 " Displayed encoding
 set fileencoding=utf-8 " File encoding
 scriptencoding utf-8
-
-set mouse=a " Enable mouse support for scrolling
 "
+" Enable mouse support for scrolling
+set mouse=a
+
 " Make sure <C-q> and <C-s> reach vim
 silent !stty -ixon > /dev/null 2>/dev/null 
 
@@ -12,14 +13,22 @@ let s:vimdir = expand("~") . "/.vim"
 let s:nvimdir = expand("~") . "/.local/share/nvim"
 let s:has_ag = executable('ag')
 
-" Plugins <3
+" - Plugins <3 ################################################################
 
+" Automatically install vim-plug in case it is missing
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Helper function to have prettier conditionals
 function! Cond(cond, ...)
   let opts = get(a:000, 0, {})
   return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
 
-
+" Actually specify the plugins
 call plug#begin(has('nvim') ? s:nvimdir . "/plugged" : s:vimdir)
 
 Plug 'vim-airline/vim-airline'
