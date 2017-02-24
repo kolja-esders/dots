@@ -2,7 +2,7 @@
 is_ubuntu || return 1
 
 # If needed, add PPA needed for neovim
-if ! hash gdate 2>/dev/null; then
+if type "$nvim" > /dev/null; then
     sudo add-apt-repository -y ppa:neovim-ppa/stable
 fi
 
