@@ -38,6 +38,7 @@ Plug 'altercation/vim-colors-solarized'
 
 Plug 'terryma/vim-expand-region'
 Plug 'Townk/vim-autoclose'
+Plug 'scrooloose/nerdcommenter'
 
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
