@@ -39,6 +39,9 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'terryma/vim-expand-region'
 Plug 'Townk/vim-autoclose'
 Plug 'scrooloose/nerdcommenter'
+Plug 'mattn/emmet-vim'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'tpope/vim-sleuth'
 
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -169,6 +172,9 @@ set formatoptions+=j " Join comments if possible
 set expandtab " Use spaces instead of tabs
 set smarttab " Be smart when using tabs
 
+" Turn off permanent search highlighting
+set nohlsearch
+
 " " 1 tab == 4 spaces
 "set shiftwidth=2
 "set softtabstop=2
@@ -182,11 +188,11 @@ set lbr
 set wrap " Wrap lines
 
 set expandtab
-set textwidth=120
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set autoindent
+set smartindent
 
 " --- CtrlP
 " Setup some default ignores
