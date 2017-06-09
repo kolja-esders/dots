@@ -62,32 +62,44 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
+include () {
+    [[ -f "$1" ]] && source "$1"
+}
+function is_osx() {
+  [[ "$OSTYPE" =~ ^darwin ]] || return 1
+}
+function is_ubuntu() {
+  [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
+}
+
 alias gdc='git diff --cached'
-#alias rc='rails c'
 alias zrc="nvim ~/.zshrc"
 alias vrc="nvim ~/.vimrc"
-alias o="open ."
 alias lol="gaa && gc -m '.' && gp"
+alias vim="nvim"
+alias rmf="rm -rf"
+
+if is_ubuntu; then
+  alias o="xdg-open . &>/dev/null"
+elif is_osx; then
+  alias o='open .'
+fi
 
 # Z
 . ~/.scripts/z.sh
-
-# Load chruby and enable auto-switching
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
 
 # Add psql to path
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -113,4 +125,8 @@ fi
 
 ##################################################################################################
 
-eval $(thefuck --alias)
+# CUDA
+#
+export PATH="$PATH:/usr/local/cuda-8.0/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64"
+include /opt/ros/kinetic/setup.zsh
