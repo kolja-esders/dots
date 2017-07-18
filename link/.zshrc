@@ -75,6 +75,7 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
+
 include () {
     [[ -f "$1" ]] && source "$1"
 }
@@ -88,18 +89,38 @@ function is_ubuntu() {
 alias gdc='git diff --cached'
 alias zrc="nvim ~/.zshrc"
 alias vrc="nvim ~/.vimrc"
-alias lol="gaa && gc -m '.' && gp"
 alias vim="nvim"
 alias rmf="rm -rf"
+alias fzi="sudo openvpn --config ~/.ssh/fzi-vpn.ovpn"
+alias ta="tmux attach -t"
+alias tn="tmux new-session -s"
+alias p3="python3"
 
 if is_ubuntu; then
   alias o="xdg-open . &>/dev/null"
 elif is_osx; then
+  alias cat-aadc="cd /Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/catkin_workspace && ce oadrive && source ./devel/setup.zsh"
+  alias ic-aadc="cd /Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/ic_workspace && ce oadrive"
   alias o='open .'
 fi
 
+dl() {
+  youtube-dl "$1" --audio-format=mp3 --audio-quality=0 -x --verbose
+}
+
+# Easily switch iTerm profile
+theme-switch () {
+echo -e "\033]50;SetProfile=$1\a";
+export ITERM_PROFILE=$1;
+[ $1 = light ] &&
+   ZSH_THEME="agnoster-light" ||
+   ZSH_THEME="agnoster"
+source $ZSH/oh-my-zsh.sh
+}
+
 # Z
-. ~/.scripts/z.sh
+[[ -f ~/.scripts/z.sh ]] && . ~/.scripts/z.sh
+#. ~/.scripts/z.sh
 
 # Add psql to path
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -125,8 +146,15 @@ fi
 
 ##################################################################################################
 
+# OpenVPN
+export PATH="/usr/local/opt/openvpn/sbin:$PATH"
+
 # CUDA
-#
-export PATH="$PATH:/usr/local/cuda-8.0/bin"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64"
+export PATH="$PATH:/usr/local/cuda/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64"
 include /opt/ros/kinetic/setup.zsh
+
+# AADC
+include /Users/kolja/Projects/aadc/robot_folders/bin/fzirob_source.sh
+export PATH="/usr/local/opt/opencv3/bin:$PATH"
+export ROS_MASTER_URI=http://141.21.14.196:11311
