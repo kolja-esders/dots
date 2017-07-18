@@ -42,11 +42,13 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'mattn/emmet-vim'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-obsession'
 
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 
-Plug 'benekastah/neomake', Cond(has('nvim'))
+Plug 'rhysd/vim-clang-format'
+"Plug 'w0rp/ale'
 
 call plug#end() 
 
@@ -77,9 +79,16 @@ set tags=./tags;
 " --- Colors
 syntax on " Color syntax highlighting
 colorscheme solarized
-set background=dark " Let vim know about the background color
 filetype plugin on
 filetype indent on
+
+" The background color should depend on the iTerm profile
+let iterm_profile = $ITERM_PROFILE
+if empty(iterm_profile) || iterm_profile == "dark"
+  set background=dark
+else
+  set background=light
+endif
 
 " --- Powerline stuff
 let g:airline_powerline_fonts = 1 " Use powerline fonts
@@ -89,7 +98,11 @@ let g:Powerline_symbols = 'fancy' " Use fancy powerline symbols
 " --- Command
 set wildmenu " Use <Left> and <Right> to navigate
 set wildmode=longest:full,full " 1st tab will complete to longest common string, next tab cycles through wildmenu
-set wildignore+=*/tmp/*,*.so,*.swp,*swo,*.zip " Ignore those files in wildmenu
+set wildignore+=*/tmp/*,*/annotations/*,*.so,*.swp,*swo,*.zip,*.png,*.jpeg,*.jpg " Ignore those files in wildmenu
+
+" Linting
+"let g:ale_lint_on_text_changed = 'never'
+"let g:ale_sign_column_always = 1
 
 " - Keys ######################################################################
 
@@ -111,6 +124,10 @@ nnoremap <Right> <NOP>
 " --- Normal Mode
 nmap <Leader>n :NERDTreeFind<CR>  Find current file in NERDTree
 nmap <Leader>m :NERDTreeToggle<CR> " Toggle NERDTree
+
+" Formatting (clang-format)
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>f :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>f :ClangFormat<CR>
 
 nmap <Leader>w :w<CR>| " Save file
 
@@ -134,6 +151,9 @@ nmap <Leader>l :bnext<CR>| " Next buffer
 nmap <Leader>h :bprevious<CR>| " Previous buffer
 nmap <Leader>b :buffers!<CR>| " Show buffers
 nmap <Leader>q :bdelete<CR>| " Delete current buffer
+
+" Replace selection with buffer
+vmap <Leader>r "_dP
 
 
 " - Tagbar ####################################################################
