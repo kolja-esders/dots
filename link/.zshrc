@@ -88,19 +88,22 @@ function is_ubuntu() {
 
 alias gdc='git diff --cached'
 alias zrc="nvim ~/.zshrc"
+alias szrc="source ~/.zshrc"
 alias vrc="nvim ~/.vimrc"
+alias svrc="source ~/.vimrc"
 alias vim="nvim"
+alias v="nvim"
+alias c="clear"
 alias rmf="rm -rf"
 alias fzi="sudo openvpn --config ~/.ssh/fzi-vpn.ovpn"
 alias ta="tmux attach -t"
 alias tn="tmux new-session -s"
 alias p3="python3"
+alias p2="python2"
 
 if is_ubuntu; then
   alias o="xdg-open . &>/dev/null"
 elif is_osx; then
-  alias cat-aadc="cd /Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/catkin_workspace && ce oadrive && source ./devel/setup.zsh"
-  alias ic-aadc="cd /Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/ic_workspace && ce oadrive"
   alias o='open .'
 fi
 
@@ -110,12 +113,13 @@ dl() {
 
 # Easily switch iTerm profile
 theme-switch () {
-echo -e "\033]50;SetProfile=$1\a";
-export ITERM_PROFILE=$1;
-[ $1 = light ] &&
-   ZSH_THEME="agnoster-light" ||
-   ZSH_THEME="agnoster"
-source $ZSH/oh-my-zsh.sh
+  clear
+  echo -e "\033]50;SetProfile=$1\a";
+  export ITERM_PROFILE=$1;
+  [ $1 = light ] &&
+     ZSH_THEME="agnoster-light" ||
+     ZSH_THEME="agnoster"
+  source $ZSH/oh-my-zsh.sh
 }
 
 # Z
@@ -146,15 +150,27 @@ fi
 
 ##################################################################################################
 
+# Don't update window title, this ensures we can use custom window names in tmux
+DISABLE_AUTO_TITLE="true"
+
 # OpenVPN
 export PATH="/usr/local/opt/openvpn/sbin:$PATH"
 
 # CUDA
-export PATH="$PATH:/usr/local/cuda/bin"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64"
+#export PATH="$PATH:/usr/local/cuda/bin"
+#export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64"
+#export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/ic_workspace/export/lib"
+#export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:/Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/ic_workspace/export/lib"
 include /opt/ros/kinetic/setup.zsh
 
 # AADC
-include /Users/kolja/Projects/aadc/robot_folders/bin/fzirob_source.sh
+#include /Users/kolja/Projects/aadc/robot_folders/bin/fzirob_source.sh
 export PATH="/usr/local/opt/opencv3/bin:$PATH"
-export ROS_MASTER_URI=http://141.21.14.196:11311
+#export ROS_MASTER_URI=http://141.21.14.196:11311
+#export ROS_MASTER_URI=http://localhost:11311
+#export ROS_MASTER_URI=http://141.21.14.162:11311
+#
+export AADC_CONFIG_FOLDER_PATH="/Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/ic_workspace/packages/oadrive/config/"
+export AADC_CONFIG_CAR_NAME="Abra"
+# robot_folders setup
+source /Users/kolja/Projects/aadc2017/robot_folders/bin/fzirob_source.sh
