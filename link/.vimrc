@@ -34,7 +34,8 @@ call plug#begin(has('nvim') ? s:nvimdir . "/plugged" : s:vimdir)
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'altercation/vim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
+Plug 'dolph/vim-colors-solarized-black'
 
 Plug 'terryma/vim-expand-region'
 Plug 'Townk/vim-autoclose'
@@ -43,12 +44,21 @@ Plug 'mattn/emmet-vim'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-obsession'
+Plug 'leafgarland/typescript-vim'
+Plug 'posva/vim-vue'
 
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'shumphrey/fugitive-gitlab.vim'
 
 Plug 'rhysd/vim-clang-format'
-"Plug 'w0rp/ale'
+Plug 'mxw/vim-jsx' " Syntax highlighting for JSX
+Plug 'w0rp/ale'
 
 call plug#end() 
 
@@ -79,6 +89,8 @@ set tags=./tags;
 " --- Colors
 syntax on " Color syntax highlighting
 colorscheme solarized
+set background=dark
+filetype on
 filetype plugin on
 filetype indent on
 
@@ -126,8 +138,15 @@ nmap <Leader>n :NERDTreeFind<CR>  Find current file in NERDTree
 nmap <Leader>m :NERDTreeToggle<CR> " Toggle NERDTree
 
 " Formatting (clang-format)
-autocmd FileType c,cpp,objc nnoremap <buffer><Leader>f :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp,objc vnoremap <buffer><Leader>f :ClangFormat<CR>
+"autocmd FileType c,cpp,objc,javascript nnoremap <buffer><Leader>f :<C-u>ClangFormat<CR>
+"autocmd FileType c,cpp,objc,javascript vnoremap <buffer><Leader>f :ClangFormat<CR>
+
+let g:clang_format#code_style = "google"
+
+let g:clang_format#style_options = {"ColumnLimit" : 100}
+
+" Select last paste in visual mode
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 nmap <Leader>w :w<CR>| " Save file
 
@@ -195,12 +214,6 @@ set smarttab " Be smart when using tabs
 " Turn off permanent search highlighting
 set nohlsearch
 
-" " 1 tab == 4 spaces
-"set shiftwidth=2
-"set softtabstop=2
-"set tabstop=2
-"set shiftround " use multiple of shiftwidth when indenting with '<' and '>'
-
 " " Linebreak on 500 characters
 set lbr
 
@@ -213,7 +226,15 @@ set softtabstop=2
 set shiftwidth=2
 set autoindent
 
+" - General aesthetics ####################################################
+
+highlight clear SignColumn
+
+
+" - Package configurations ################################################
+
 " --- CtrlP
+
 " Setup some default ignores
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
@@ -221,7 +242,29 @@ let g:ctrlp_custom_ignore = {
 \}
 let g:ctrlp_root_markers = ['.root'] " Have a marker file for root detection
 let g:ctrlp_working_path_mode = 'ra' " Use the nearest .git directory as the cwd
-nmap <leader>o :CtrlP<cr>| " Open a new file
+
+" --- fugitive
+
+let g:fugitive_gitlab_domains = ['https://ids-git.fzi.de']
+
+" --- vim-jsx
+
+" Enable JSX syntax highlighting also for .js files
+let g:jsx_ext_required = 0
+
+" --- ALE
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'cpp': ['clang-format'],
+\}
+let g:airline#extensions#ale#enabled = 1
+
+nmap <buffer><Leader>f :ALEFix<CR>
+
+" --- fzf
+nmap <leader>o :GFiles<cr>| " Open a new file (which is under version control)
+nmap <leader>a :Ag<cr>| " Open a new file (which is under version control)
+" Maybe also add :Commits?
 
 
 " --- Buffergator
