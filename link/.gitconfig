@@ -23,7 +23,12 @@
     whitespace = fix
 [merge]
     log = true
+	tool = bc
 [rerere]
     enabled = 1
 [help]
     autocorrect = 1
+[diff]
+	tool = bc
+[mergetool "bc"]
+	trustExitCode = true
