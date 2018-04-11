@@ -21,7 +21,7 @@ ZSH_THEME="agnoster"
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+#DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -49,7 +49,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git mercurial extract zsh-syntax-highlighting tumult up k)
+plugins=(git mercurial extract zsh-syntax-highlighting tumult up k shrink-path)
 
 # User configuration
 
@@ -57,6 +57,11 @@ plugins=(git mercurial extract zsh-syntax-highlighting tumult up k)
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
+
+# Shrink prompt
+prompt_dir() {
+  prompt_segment blue black "%-64<...<%~%<<"
+}
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -96,10 +101,10 @@ alias v="nvim"
 alias c="clear"
 alias rmf="rm -rf"
 alias fzi="sudo openvpn --config ~/.ssh/fzi-vpn.ovpn"
-alias ta="tmux attach -t"
-alias tn="tmux new-session -s"
 alias p3="python3"
 alias p2="python2"
+alias tn="tmux new -s"
+alias ta="tmux attach -t"
 
 if is_ubuntu; then
   alias o="xdg-open . &>/dev/null"
@@ -109,6 +114,11 @@ fi
 
 dl() {
   youtube-dl "$1" --audio-format=mp3 --audio-quality=0 -x --verbose
+}
+
+# Source [ARG]/bin/activate
+s() {
+  source "$1"/bin/activate
 }
 
 # Easily switch iTerm profile
@@ -122,16 +132,11 @@ theme-switch () {
   source $ZSH/oh-my-zsh.sh
 }
 
-# Z
 [[ -f ~/.scripts/z.sh ]] && . ~/.scripts/z.sh
-#. ~/.scripts/z.sh
+[[ -f /Applications/Postgres.app/Contents/Versions/latest/bin ]] && export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+[[ -f $PATH:/Applications/MATLAB_R2016b.app/bin ]] && export PATH=$PATH:/Applications/MATLAB_R2016b.app/bin
 
-# Add psql to path
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
-# Add matlab to path
-export PATH=$PATH:/Applications/MATLAB_R2016b.app/bin
-
-# Ensure good locales
+# Locales
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -143,15 +148,9 @@ export DOTS=$HOME/.dots
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
-if [[ -a ~/.localrc ]]
-then
-  source ~/.localrc
-fi
+include ~/.localrc
 
 ##################################################################################################
-
-# Don't update window title, this ensures we can use custom window names in tmux
-DISABLE_AUTO_TITLE="true"
 
 # OpenVPN
 export PATH="/usr/local/opt/openvpn/sbin:$PATH"
@@ -161,16 +160,25 @@ export PATH="/usr/local/opt/openvpn/sbin:$PATH"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/ic_workspace/export/lib"
 #export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:/Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/ic_workspace/export/lib"
-include /opt/ros/kinetic/setup.zsh
 
-# AADC
-#include /Users/kolja/Projects/aadc/robot_folders/bin/fzirob_source.sh
-export PATH="/usr/local/opt/opencv3/bin:$PATH"
-#export ROS_MASTER_URI=http://141.21.14.196:11311
-#export ROS_MASTER_URI=http://localhost:11311
-#export ROS_MASTER_URI=http://141.21.14.162:11311
-#
-export AADC_CONFIG_FOLDER_PATH="/Users/kolja/Projects/aadc/robot_folders/checkout/oadrive/ic_workspace/packages/oadrive/config/"
-export AADC_CONFIG_CAR_NAME="Abra"
-# robot_folders setup
-source /Users/kolja/Projects/aadc2017/robot_folders/bin/fzirob_source.sh
+include ~/.fzf.zsh
+
+# Flutter
+export PATH="/Users/kolja/Projects/flutter/bin:$PATH"
+
+# MASTER
+
+include ~/Projects/master/robot_folders/bin/fzirob_source.sh
+#include /opt/ros/kinetic/setup.zsh
+
+# PugiXML path needed for custom CMake FindPugiXML script needed for liblanet installation
+#export PUGIXML_HOME="/Users/kolja/Projects/aadc2017/pugixml-1.8"
+# export CMAKE_PREFIX_PATH="/Users/kolja/Projects/aadc2017/pugixml-1.8:$CMAKE_PREFIX_PATH"
+
+#export CMAKE_C_COMPILER="/usr/local/bin/gcc-7"
+#export CMAKE_CXX_COMPILER="/usr/local/bin/g++-7"
+
+#export CC="/usr/local/bin/gcc-7"
+#export CXX="/usr/local/bin/g++-7"
+
+#export GTSAM_DIR=""
