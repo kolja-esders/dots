@@ -48,7 +48,6 @@ Plug 'leafgarland/typescript-vim'
 Plug 'posva/vim-vue'
 
 Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
@@ -88,8 +87,8 @@ set tags=./tags;
 " - Visuals ###################################################################
 " --- Colors
 syntax on " Color syntax highlighting
-colorscheme solarized
 set background=dark
+colorscheme solarized
 filetype on
 filetype plugin on
 filetype indent on
@@ -262,8 +261,9 @@ let g:airline#extensions#ale#enabled = 1
 nmap <buffer><Leader>f :ALEFix<CR>
 
 " --- fzf
-nmap <leader>o :GFiles<cr>| " Open a new file (which is under version control)
+nmap <leader>o :Files<cr>| " Open a new file (which is under version control)
 nmap <leader>a :Ag<cr>| " Open a new file (which is under version control)
+nmap <leader>y :Lines<cr>|
 " Maybe also add :Commits?
 
 
