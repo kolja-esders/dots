@@ -5,7 +5,7 @@ export ZSH=~/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -168,17 +168,22 @@ export PATH="/Users/kolja/Projects/flutter/bin:$PATH"
 
 # MASTER
 
+export ROB_FOLDERS_IGNORE_CMAKE_PREFIX_PATH=":-)"
 include ~/Projects/master/robot_folders/bin/fzirob_source.sh
-#include /opt/ros/kinetic/setup.zsh
+include /opt/ros/lunar/setup.zsh
 
-# PugiXML path needed for custom CMake FindPugiXML script needed for liblanet installation
-#export PUGIXML_HOME="/Users/kolja/Projects/aadc2017/pugixml-1.8"
-# export CMAKE_PREFIX_PATH="/Users/kolja/Projects/aadc2017/pugixml-1.8:$CMAKE_PREFIX_PATH"
+export CC="/usr/local/bin/gcc-8"
+export CXX="/usr/local/bin/g++-8"
 
-#export CMAKE_C_COMPILER="/usr/local/bin/gcc-7"
-#export CMAKE_CXX_COMPILER="/usr/local/bin/g++-7"
+export CMAKE_C_COMPILER="/usr/local/bin/gcc-7"
+export CMAKE_CXX_COMPILER="/usr/local/bin/g++-7"
 
-#export CC="/usr/local/bin/gcc-7"
-#export CXX="/usr/local/bin/g++-7"
 
-#export GTSAM_DIR=""
+. /Users/kolja/torch/install/bin/torch-activate
+
+# Make sure gpg works
+export GPG_TTY=$(tty)
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
